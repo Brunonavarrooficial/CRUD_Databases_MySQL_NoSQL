@@ -20,7 +20,7 @@ def conectar():
 
 
 def desconectar():
-    """ 
+    """
     Função para desconectar do servidor.
     """
     """print('Desconectando do servidor...')"""
@@ -49,14 +49,31 @@ def listar():
             print('....................')
     else:
         print('Não existem produtos cadastrados.')
-    desconectar(conn)
+        desconectar(conn)
 
 
 def inserir():
     """
     Função para inserir um produto
     """
-    print('Inserindo produto...')
+    """print('Inserindo produto...')"""
+
+    conn = conectar()
+    cursor = conn.cursor()
+
+    nome = input('Informe o nome do produto: ')
+    preco = input('Informe opreço do produto: ')
+    estoque = input('Informe a quantidade em estoque: ')
+
+    cursor.execute(
+        f'INSERT INTO produtos (nome, preco, estoque) VALUES ("{nome}", {preco}, {estoque})')
+    conn.commit()
+
+    if cursor.rowcount == 1:
+        print(f'O produto {nome} foi inserido com sucesso')
+    else:
+        print('Não foi possivel inserir o produto')
+        desconectar(conn)
 
 
 def atualizar():
