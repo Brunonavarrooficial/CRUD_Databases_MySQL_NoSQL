@@ -35,8 +35,21 @@ def listar():
     """print('Listando produtos...')"""
     conn = conectar()
     cursor = conn.cursor()
-    cursor.execute('SELECT * FROm produtos')
+    cursor.execute('SELECT * FROM produtos')
     produtos = cursor.fetchall()
+
+    if len(produtos) > 0:
+        print('Listando produtos...')
+        print('....................')
+        for produto in produtos:
+            print(f'ID: {produto[0]}')
+            print(f'Produto: {produto[1]}')
+            print(f'Preço: {produto[2]}')
+            print(f'Estoque: {produto[3]}')
+            print('....................')
+    else:
+        print('Não existem produtos cadastrados.')
+    desconectar(conn)
 
 
 def inserir():
