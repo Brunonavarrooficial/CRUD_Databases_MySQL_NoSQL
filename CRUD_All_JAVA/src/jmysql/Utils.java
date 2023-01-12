@@ -2,6 +2,7 @@ package jmysql;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class Utils {
@@ -25,6 +26,17 @@ public class Utils {
 			}
 			System.exit(-42);
 			return null;
+		}
+	}
+
+	public static void desconectar(Connection conn) {
+		if (conn != null) {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				System.out.println("Não foi possível fechar a conexão.");
+				e.printStackTrace();
+			}
 		}
 	}
 
