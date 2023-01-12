@@ -1,3 +1,23 @@
+# CRUD MySQL WorkBench Java
+
+realizada operação crud com bando de dados em linguagem Java
+
+#
+
+### Skills:
+
+* Bibliotecas
+    * import java.sql.Connection;
+    * import java.sql.DriverManager;
+    * import java.sql.ResultSet;
+    * import java.sql.PreparedStatement;
+    * import java.sql.SQLException;
+    * import java.util.Locale;
+    * import java.util.Scanner;
+* Jar
+   * MySQL-Connector-j-8.0.31.jar 
+
+
 ## Getting Started
 
 Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
