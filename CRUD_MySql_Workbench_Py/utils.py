@@ -1,18 +1,20 @@
 import MySQLdb
+import dotenv
+import os
+
+dotenv.load_dotenv(dotenv.find_dotenv())
 
 
 def conectar():
-    """
-    Função para conectar ao servidor
-    """
+    """Função para conectar ao servidor"""
     """ print('Conectando ao servidor...')"""
 
     try:
         conn = MySQLdb.connect(
             db='pmysql',
             host='localhost',
-            user='navarro',
-            passwd='patrinostru'
+            user=os.getenv('user'),
+            passwd=os.getenv('password')
         )
         return conn
     except MySQLdb.Error as e:
@@ -20,18 +22,14 @@ def conectar():
 
 
 def desconectar():
-    """
-    Função para desconectar do servidor.
-    """
+    """Função para desconectar do servidor."""
     """print('Desconectando do servidor...')"""
     if conn:
         conn.close()
 
 
 def listar():
-    """
-    Função para listar os produtos
-    """
+    """Função para listar os produtos"""
     """print('Listando produtos...')"""
     conn = conectar()
     cursor = conn.cursor()
@@ -53,16 +51,14 @@ def listar():
 
 
 def inserir():
-    """
-    Função para inserir um produto
-    """
+    """Função para inserir um produto"""
     """print('Inserindo produto...')"""
 
     conn = conectar()
     cursor = conn.cursor()
 
     nome = input('Informe o nome do produto: ')
-    preco = input('Informe opreço do produto: ')
+    preco = input('Informe o preço do produto: ')
     estoque = input('Informe a quantidade em estoque: ')
 
     cursor.execute(
@@ -80,14 +76,44 @@ def atualizar():
     """
     Função para atualizar um produto
     """
-    print('Atualizando produto...')
+    """print('Atualizando produto...')"""
+    conn = conectar()
+    cursor = conn.cursor()
+
+    codigo = int(input('Informe o código do produto: '))
+    nome = input('Informe o nome do produto: ')
+    preco = float(input('Informe o preço do produto: '))
+    estoque = int(input('Informe a nova quantidade em estoque: '))
+
+    cursor.execute(
+        f"UPDATE produtos SET nome='{nome}', preco={preco}, estoque={estoque} WHERE id={codigo}")
+    conn.commit()
+
+    if cursor.rowcount == 1:
+        print(f'O produto {nome} foi atualizado com sucesso')
+    else:
+        print('Erro ao atualizar o produto.')
+        desconectar(conn)
 
 
 def deletar():
     """
     Função para deletar um produto
     """
-    print('Deletando produto...')
+    '''print('Deletando produto...')'''
+    conn = conectar()
+    cursor = conn.cursor()
+
+    codigo = int(input('Informe o código do produto: '))
+
+    cursor.execute(f'DELETE FROM produtos WHERE id={codigo}')
+    conn.commit()
+
+    if cursor.rowcount == 1:
+        print('Produto excluido com sucesso.')
+    else:
+        print(f'Erro ao excluir o produto id={codigo}')
+        desconectar(conn)
 
 
 def menu():
