@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Properties;
+import java.sql.Statement;
 import java.util.Scanner;
 
 public class Utils {
@@ -13,20 +13,24 @@ public class Utils {
 	static Scanner teclado = new Scanner(System.in);
 
 	public static Connection conectar() {
-		Properties props = new Properties();
-		props.setProperty("user", "Navarro");
-		props.setProperty("password", "patrinostru");
-		props.setProperty("ssh", "false");
-		String URL_SERVIDOR = "jdbc:postgresql://localhost:5432/ppostgresql";
+		String URL_SERVIDOR = "jdbc:sqlite:src/jsqlite/jsqlite3.geek";
 
 		try {
-			return DriverManager.getConnection(URL_SERVIDOR);
+			Connection conn = DriverManager.getConnection(URL_SERVIDOR);
+
+			String TABLE = "CREATE TABLE IF NOT EXISTS produtos("
+					+ "id INTEGER PRIMARY KEY AUTOINCREMENT,"
+					+ "nome TEXT NOT NULL,"
+					+ "preco REAL NOT NULL,"
+					+ "estoque INTEGER NOT NULL);";
+
+			Statement stmt = conn.createStatement();
+			stmt.executeUpdate(TABLE);
+
+			return conn;
 		} catch (Exception e) {
 			e.printStackTrace();
-			if (e instanceof ClassNotFoundException) {
-				System.err.println("Verifique se o servidor está ativo");
-			}
-			System.exit(-42);
+			System.out.println("Não foi possivel conectar ao SQLite: " + e);
 			return null;
 		}
 
@@ -47,31 +51,19 @@ public class Utils {
 
 		try {
 			Connection conn = conectar();
-			PreparedStatement produtos = conn.prepareStatement(
-					BUSCAR_TODOS,
-					ResultSet.TYPE_SCROLL_INSENSITIVE,
-					ResultSet.CONCUR_READ_ONLY
-
-			);
+			PreparedStatement produtos = conn.prepareStatement(BUSCAR_TODOS);
 			ResultSet res = produtos.executeQuery();
 
-			res.last();
-			int qtd = res.getRow();
-			res.beforeFirst();
-
-			if (qtd > 0) {
-				System.out.println("Listando produtos........");
+			while (res.next()) {
+				System.out.println("...........Produtos:.............");
+				System.out.println("ID: " + res.getInt(1));
+				System.out.println("Produto: " + res.getString(2));
+				System.out.println("Preço: " + res.getFloat(3));
+				System.out.println("Estoque: " + res.getInt(4));
 				System.out.println(".........................");
-				while (res.next()) {
-					System.out.println("ID: " + res.getInt(1));
-					System.out.println("Produto: " + res.getString(2));
-					System.out.println("Preço: " + res.getFloat(3));
-					System.out.println("Estoque: " + res.getInt(4));
-					System.out.println(".........................");
-				}
-			} else {
-				System.out.println("Não existem produtos cadastrados.");
 			}
+			produtos.close();
+			desconectar(conn);
 
 		} catch (Exception e) {
 			e.printStackTrace();
