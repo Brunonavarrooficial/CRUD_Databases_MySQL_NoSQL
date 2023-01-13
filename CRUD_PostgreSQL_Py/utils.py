@@ -18,7 +18,7 @@ def conectar():
         print(f'Erro na conexão ao PostgreSQL Server: {e}')
 
 
-def desconectar():
+def desconectar(conn):
     """ Função para desconectar do servidor.
     print('Desconectando do servidor...')"""
     if conn:
@@ -26,17 +26,48 @@ def desconectar():
 
 
 def listar():
-    """
-    Função para listar os produtos
-    """
-    print('Listando produtos...')
+    """Função para listar os produtos    
+    print('Listando produtos...')"""
+
+    conn = conectar()
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM produtos')
+    produtos = cursor.fetchall()
+
+    if len(produtos) > 0:
+        print('Listando Produtos....')
+        print('.....................')
+        for produto in produtos:
+            print(f'ID: {produto[0]}')
+            print(f'Produto: {produto[1]}')
+            print(f'Preço: {produto[2]}')
+            print(f'Estoque: {produto[3]}')
+            print('.....................')
+    else:
+        print('Não existem produtos cadastrados.')
+    desconectar(conn)
 
 
 def inserir():
-    """
-    Função para inserir um produto
-    """
-    print('Inserindo produto...')
+    """Função para inserir um produto
+    print('Inserindo produto...')"""
+
+    conn = conectar()
+    cursor = conn.cursor()
+
+    nome = input('Informe o nome do produto: ')
+    preco = float(input('Informe o preço do produto: '))
+    estoque = int(input('Informe a quantidade em estoque: '))
+
+    cursor.execute(
+        f"INSERT INTO produtos (nome, preco, estoque) VALUES ('{nome}', {preco}, {estoque} )")
+    conn.commit()
+
+    if cursor.rowcount == 1:
+        print(f'O produto {nome} foi sinserido com sucesso.')
+    else:
+        print(f'Não foi possível inserir o produto {nome}.')
+    desconectar(conn)
 
 
 def atualizar():
