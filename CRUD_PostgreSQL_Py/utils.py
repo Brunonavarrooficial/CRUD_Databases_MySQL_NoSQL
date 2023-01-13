@@ -1,4 +1,8 @@
 import psycopg2
+import dotenv
+import os
+
+dotenv.load_dotenv(dotenv.find_dotenv())
 
 
 def conectar():
@@ -10,8 +14,8 @@ def conectar():
         conn = psycopg2.connect(
             database='ppostgresql',
             host='localhost',
-            user='Navarro',
-            password='postgres'
+            user=os.getenv('user'),
+            password=os.getenv('password')
         )
         return conn
     except psycopg2.Error as e:
@@ -64,24 +68,51 @@ def inserir():
     conn.commit()
 
     if cursor.rowcount == 1:
-        print(f'O produto {nome} foi sinserido com sucesso.')
+        print(f'O produto {nome} foi inserido com sucesso.')
     else:
         print(f'Não foi possível inserir o produto {nome}.')
     desconectar(conn)
 
 
 def atualizar():
-    """
-    Função para atualizar um produto
-    """
-    print('Atualizando produto...')
+    """Função para atualizar um produto
+    print('Atualizando produto...')"""
+
+    conn = conectar()
+    cursor = conn.cursor()
+
+    codigo = int(input('Informe o código do produto: '))
+    nome = input('Informe o nome do produto: ')
+    preco = float(input('Informe o preço do produto: '))
+    estoque = int(input('Informe a quantidade em estoque: '))
+
+    cursor.execute(
+        f"UPDATE produtos SET nome='{nome}', preco={preco}, estoque={estoque} WHERE id={codigo}")
+    conn.commit()
+
+    if cursor.rowcount == 1:
+        print(f'O produto {nome} foi atualizado com sucesso.')
+    else:
+        print(f'Não foi possível atualizar o produto {nome}.')
+    desconectar(conn)
 
 
 def deletar():
-    """
-    Função para deletar um produto
-    """
-    print('Deletando produto...')
+    """Função para deletar um produto
+    print('Deletando produto...')"""
+
+    conn = conectar()
+    cursor = conn.cursor()
+
+    codigo = int(input('informe o codigo do produto: '))
+    cursor.execute(f'DELETE FROM produtos WHERE id={codigo}')
+    conn.commit()
+
+    if cursor.rowcount == 1:
+        print(f'O produto {codigo} foi excluído com sucesso.')
+    else:
+        print(f'Não foi possível excluír o produto codigo: {codigo}.')
+    desconectar(conn)
 
 
 def menu():

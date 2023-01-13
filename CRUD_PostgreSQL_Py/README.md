@@ -2,11 +2,17 @@
 
 Operação CRUD com Banco de Dados PostgreSQL e linguagem Python.
 
-bibliotecas:
+#
 
-psycopg2:
+* bibliotecas:
+
+  * psycopg2:
 ```
-pip install psycopg2-binary
+    pip install psycopg2-binary
+```
+  * dotenv:
+```
+   pip install python-dotenv
 ```
 
 
