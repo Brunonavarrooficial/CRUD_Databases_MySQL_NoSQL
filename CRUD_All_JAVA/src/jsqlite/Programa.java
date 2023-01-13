@@ -1,4 +1,4 @@
-package jmysql;
+package jsqlite;
 
 public class Programa {
 

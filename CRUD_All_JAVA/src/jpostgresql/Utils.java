@@ -89,16 +89,21 @@ public class Utils {
 			PreparedStatement salvar = conn.prepareStatement(INSERIR);
 
 			salvar.setString(1, nome);
-			salvar.setFloat(1, preco);
+			salvar.setFloat(2, preco);
 			salvar.setInt(3, estoque);
 
-			salvar.executeUpdate();
+			int res = salvar.executeUpdate();
+
+			if (res > 0) {
+				System.out.println("O produto " + nome + " foi inserido com sucesso.");
+			} else {
+				System.out.println("O produto " + nome + " não foi inserido exito.");
+			}
 			salvar.close();
 			desconectar(conn);
-			System.out.println("O produto " + nome + " foi inserido com sucesso.");
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.err.println("Erro Salvando produto");
+			System.err.println("Erro ao salvar dados do produto");
 			System.exit(-42);
 		}
 	}
@@ -107,85 +112,64 @@ public class Utils {
 		System.out.println("Informe o código do produto: ");
 		int id = Integer.parseInt(teclado.nextLine());
 
-		String BUSCAR_POR_ID = "SELECT * FROM produtos WHERE id=?";
-
 		try {
 			Connection conn = conectar();
-			PreparedStatement produto = conn.prepareStatement(
-					BUSCAR_POR_ID,
-					ResultSet.TYPE_SCROLL_INSENSITIVE,
-					ResultSet.CONCUR_READ_ONLY);
 
-			produto.setInt(1, id);
-			ResultSet res = produto.executeQuery();
+			System.out.println("Infome o nome do produto");
+			String nome = teclado.nextLine();
 
-			res.last();
-			int qtd = res.getRow();
-			res.beforeFirst();
+			System.out.println("Informe o preço do produto: ");
+			float preco = teclado.nextFloat();
 
-			if (qtd > 0) {
-				System.out.println("Infome o nome do produto");
-				String nome = teclado.nextLine();
+			System.out.println("informe a quantidade em estoque");
+			int estoque = teclado.nextInt();
 
-				System.out.println("Informe o preço do produto: ");
-				float preco = teclado.nextFloat();
+			String ATUALIZAR = "UPDATE produtos SET nome=?, preco=?, estoque=? WHERE id=?";
+			PreparedStatement upd = conn.prepareStatement(ATUALIZAR);
 
-				System.out.println("informe a quantidade em estoque");
-				int estoque = teclado.nextInt();
+			upd.setString(1, nome);
+			upd.setFloat(2, preco);
+			upd.setInt(3, estoque);
+			upd.setInt(4, id);
 
-				String ATUALIZAR = "UPDATE produtos SET nome=?, preco=?, estoque=? WHERE id=?";
-				PreparedStatement upd = conn.prepareStatement(ATUALIZAR);
+			int res = upd.executeUpdate();
 
-				upd.setString(1, nome);
-				upd.setFloat(2, preco);
-				upd.setInt(3, estoque);
-				upd.setInt(4, id);
-
-				upd.executeUpdate();
-				upd.close();
-				desconectar(conn);
-				System.out.println("O produto " + nome + " foi atualizado com seucesso.");
+			if (res > 0) {
+				System.out.println("O produto " + nome + " foi atualizado com sucesso.");
 			} else {
-				System.out.println("Não existe produto com o id" + id + "informado.");
+				System.out.println("O produto " + nome + " não foi atualizado com exito.");
 			}
+			upd.close();
+			desconectar(conn);
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.err.println("Não foi possível atualizar o produto");
+			System.err.println("Não foi possível atualizar o produto com id " + id);
 			System.exit(-42);
 		}
 	}
 
 	public static void deletar() {
 		String DELETAR = "DELETE FROM produtos WHERE id=?";
-		String BUSCAR_POR_ID = "SELECT * FROM produtos WHERE id=?";
 
 		System.out.println("Informe o código do produto: ");
 		int id = Integer.parseInt(teclado.nextLine());
 
 		try {
 			Connection conn = conectar();
-			PreparedStatement produto = conn.prepareStatement(
-					BUSCAR_POR_ID,
-					ResultSet.TYPE_SCROLL_INSENSITIVE,
-					ResultSet.CONCUR_READ_ONLY);
-			produto.setInt(1, id);
-			ResultSet res = produto.executeQuery();
 
-			res.last();
-			int qtd = res.getRow();
-			res.beforeFirst();
+			PreparedStatement del = conn.prepareStatement(DELETAR);
+			del.setInt(1, id);
 
-			if (qtd > 0) {
-				PreparedStatement del = conn.prepareStatement(DELETAR);
-				del.setInt(1, id);
-				del.executeUpdate();
-				del.close();
-				desconectar(conn);
-				System.out.println("O produto foi deletado com sucesso.");
+			int res = del.executeUpdate();
+
+			if (res > 0) {
+				System.out.println("O produto" + id + "foi deletado com sucesso.");
 			} else {
-				System.out.println("Não existe produto com o id informado");
+				System.out.println("Não foi possível deletar o produto.");
 			}
+			del.close();
+			desconectar(conn);
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.err.println("Erro ao deletar produto");

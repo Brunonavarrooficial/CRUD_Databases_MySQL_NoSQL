@@ -2,6 +2,8 @@
 
 Operação CRUD em diversos bancos de dados relacionais e não relacionais.
 
+#
+
 * Relacionais
      * MySqlWorkBench [Repositório](https://github.com/Brunonavarrooficial/CRUD_Databases_MySQL_NoSQL/tree/main/CRUD_All_JAVA/src/jmysql)
      * PostgreSQL [Repositório](https://github.com/Brunonavarrooficial/CRUD_Databases_MySQL_NoSQL/tree/main/CRUD_All_JAVA/src/jpostgresql)
@@ -11,7 +13,7 @@ Operação CRUD em diversos bancos de dados relacionais e não relacionais.
      * [Repositório](https://github.com/Brunonavarrooficial/CRUD_Databases_MySQL_NoSQL/tree/main/CRUD_All_JAVA/lib)
      
 
-#
+##
 
 ## CRUD MySQL WorkBench Java
 
@@ -33,6 +35,7 @@ realizada operação crud com bando de dados MySQL WorkBench em linguagem JAVA
 * Jar
    * MySQL-Connector-j-8.0.31.jar 
 
+##
 ## CRUD PostgreSQL JAVA
 realizada opração crud com banco de dados PostgreSQL em Linguajem JAVA
 
@@ -41,7 +44,7 @@ realizada opração crud com banco de dados PostgreSQL em Linguajem JAVA
 ### Skills:
 
 * Classes
-* bibliotecas
+* Bibliotecas
     * import java.sql.Connection;
     * import java.sql.DriverManager;
     * import java.sql.PreparedStatement;
@@ -51,6 +54,29 @@ realizada opração crud com banco de dados PostgreSQL em Linguajem JAVA
     * import java.util.Scanner;
 * Jar
    * postgresql-42.3.7.jar
+   
+##
+
+## CRUD SQLite JAVA
+realizada opração crud com banco de dados SQLite em Linguajem JAVA
+
+#
+
+### Skills:
+
+* Classes
+* Repositório sqlite criado na raiz do projeto
+   * jsqlite3.geek
+* Bibliotecas
+    * import java.sql.Connection;
+    * import java.sql.DriverManager;
+    * import java.sql.ResultSet;
+    * import java.sql.PreparedStatement;
+    * import java.sql.SQLException;
+    * import java.util.Locale;
+    * import java.util.Scanner;
+* Jar
+   * sqlite-jdc-3.40.0.0.jar
    
 #
 
