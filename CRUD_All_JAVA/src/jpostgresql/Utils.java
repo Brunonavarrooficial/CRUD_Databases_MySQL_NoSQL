@@ -2,6 +2,9 @@ package jpostgresql;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Properties;
 import java.util.Scanner;
 
@@ -12,7 +15,7 @@ public class Utils {
 	public static Connection conectar() {
 		Properties props = new Properties();
 		props.setProperty("user", "Navarro");
-		props.setProperty("password", "postgres");
+		props.setProperty("password", "patrinostru");
 		props.setProperty("ssh", "false");
 		String URL_SERVIDOR = "jdbc:postgresql://localhost:5432/ppostgresql";
 
@@ -29,20 +32,173 @@ public class Utils {
 
 	}
 
+	public static void desconectar(Connection conn) {
+		if (conn != null) {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
 	public static void listar() {
-		System.out.println("Listando produtos...");
+		String BUSCAR_TODOS = "SELECT * FROM produtos";
+
+		try {
+			Connection conn = conectar();
+			PreparedStatement produtos = conn.prepareStatement(
+					BUSCAR_TODOS,
+					ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_READ_ONLY
+
+			);
+			ResultSet res = produtos.executeQuery();
+
+			res.last();
+			int qtd = res.getRow();
+			res.beforeFirst();
+
+			if (qtd > 0) {
+				System.out.println("Listando produtos........");
+				System.out.println(".........................");
+				while (res.next()) {
+					System.out.println("ID: " + res.getInt(1));
+					System.out.println("Produto: " + res.getString(2));
+					System.out.println("Preço: " + res.getFloat(3));
+					System.out.println("Estoque: " + res.getInt(4));
+					System.out.println(".........................");
+				}
+			} else {
+				System.out.println("Não existem produtos cadastrados.");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.err.println("Erro brucando todos os produtos");
+			System.exit(-42);
+		}
 	}
 
 	public static void inserir() {
-		System.out.println("Inserindo produtos...");
+		System.out.println("Informe o nome do produto: ");
+		String nome = teclado.nextLine();
+
+		System.out.println("Informe o preço: ");
+		float preco = teclado.nextFloat();
+
+		System.out.println("Informe a quantidade em estoque: ");
+		int estoque = teclado.nextInt();
+
+		String INSERIR = "INSERT INTO produtos (nome, preco, estoque) VALUES (?, ?, ?)";
+
+		try {
+			Connection conn = conectar();
+			PreparedStatement salvar = conn.prepareStatement(INSERIR);
+
+			salvar.setString(1, nome);
+			salvar.setFloat(1, preco);
+			salvar.setInt(3, estoque);
+
+			salvar.executeUpdate();
+			salvar.close();
+			desconectar(conn);
+			System.out.println("O produto " + nome + " foi inserido com sucesso.");
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.err.println("Erro Salvando produto");
+			System.exit(-42);
+		}
 	}
 
 	public static void atualizar() {
-		System.out.println("Atualizando produtos...");
+		System.out.println("Informe o código do produto: ");
+		int id = Integer.parseInt(teclado.nextLine());
+
+		String BUSCAR_POR_ID = "SELECT * FROM produtos WHERE id=?";
+
+		try {
+			Connection conn = conectar();
+			PreparedStatement produto = conn.prepareStatement(
+					BUSCAR_POR_ID,
+					ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_READ_ONLY);
+
+			produto.setInt(1, id);
+			ResultSet res = produto.executeQuery();
+
+			res.last();
+			int qtd = res.getRow();
+			res.beforeFirst();
+
+			if (qtd > 0) {
+				System.out.println("Infome o nome do produto");
+				String nome = teclado.nextLine();
+
+				System.out.println("Informe o preço do produto: ");
+				float preco = teclado.nextFloat();
+
+				System.out.println("informe a quantidade em estoque");
+				int estoque = teclado.nextInt();
+
+				String ATUALIZAR = "UPDATE produtos SET nome=?, preco=?, estoque=? WHERE id=?";
+				PreparedStatement upd = conn.prepareStatement(ATUALIZAR);
+
+				upd.setString(1, nome);
+				upd.setFloat(2, preco);
+				upd.setInt(3, estoque);
+				upd.setInt(4, id);
+
+				upd.executeUpdate();
+				upd.close();
+				desconectar(conn);
+				System.out.println("O produto " + nome + " foi atualizado com seucesso.");
+			} else {
+				System.out.println("Não existe produto com o id" + id + "informado.");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.err.println("Não foi possível atualizar o produto");
+			System.exit(-42);
+		}
 	}
 
 	public static void deletar() {
-		System.out.println("Deletando produtos...");
+		String DELETAR = "DELETE FROM produtos WHERE id=?";
+		String BUSCAR_POR_ID = "SELECT * FROM produtos WHERE id=?";
+
+		System.out.println("Informe o código do produto: ");
+		int id = Integer.parseInt(teclado.nextLine());
+
+		try {
+			Connection conn = conectar();
+			PreparedStatement produto = conn.prepareStatement(
+					BUSCAR_POR_ID,
+					ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_READ_ONLY);
+			produto.setInt(1, id);
+			ResultSet res = produto.executeQuery();
+
+			res.last();
+			int qtd = res.getRow();
+			res.beforeFirst();
+
+			if (qtd > 0) {
+				PreparedStatement del = conn.prepareStatement(DELETAR);
+				del.setInt(1, id);
+				del.executeUpdate();
+				del.close();
+				desconectar(conn);
+				System.out.println("O produto foi deletado com sucesso.");
+			} else {
+				System.out.println("Não existe produto com o id informado");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.err.println("Erro ao deletar produto");
+			System.exit(-42);
+		}
 	}
 
 	public static void menu() {
