@@ -27,21 +27,23 @@ def listar():
     print('Listando produtos...')"""
 
     conn = conectar()
-    cursor = conn.cursor()
-    cursor.execute("SELECT * FROM produtos")
-    produtos = cursor.fetchall()
+    db = conn.pmongo
 
-    if len(produtos) > 0:
-        print('Listando produtos...')
-        print('....................')
-        for produto in produtos:
-            print(f'ID: {produto[0]}')
-            print(f'Produto: {produto[1]}')
-            print(f'Preço: {produto[2]}')
-            print(f'Estoque: {produto[3]}')
-            print('....................')
-    else:
-        print('Não existem produtos cadastrados')
+    try:
+        if db.produtos.count_documents({}) > 0:
+            produtos = db.produtos.find()
+            print('Listando produtos....')
+            print('.....................')
+            for produto in produtos:
+                print(f"ID: {produto['_id']}")
+                print(f"Produto: {produto['nome']}")
+                print(f"Preço: {produto['preco']}")
+                print(f"Estoque: {produto['estoque']}")
+                print('....................')
+        else:
+            print('Não existem produtos cadastrados')
+    except errors.PyMongoError as e:
+        print(f'Erro ao acessar o banco de dados: {e}')
     desconectar(conn)
 
 
@@ -50,20 +52,23 @@ def inserir():
     print('Inserindo produto...')"""
 
     conn = conectar()
-    cursor = conn.cursor()
+    db = conn.pmongo
 
     nome = input('Informe o nome do produto:')
     preco = float(input('Informe o preço do produto: '))
     estoque = int(input('Informe a quantidade em estoque: '))
 
-    cursor.execute(
-        f"INSERT INTO produtos (nome, preco, estoque) VALUES ('{nome}', {preco}, {estoque})")
-    conn.commit()
-
-    if cursor.rowcount == 1:
-        print(f'O produto nome foi inserido com sucesso.')
-    else:
-        print('Não foi possível inserir o produto.')
+    try:
+        db.produtos.insert_one(
+            {
+                "nome": nome,
+                "preco": preco,
+                "estoque": estoque
+            }
+        )
+        print(f'O produto {nome} foi inserido com sucesso.')
+    except errors.PyMongoError as e:
+        print(f'Não foi possível inserir o produto erro: {e}')
     desconectar(conn)
 
 
@@ -72,21 +77,33 @@ def atualizar():
     print('Atualizando produto...')"""
 
     conn = conectar()
-    cursor = conn.cursor()
+    db = conn.pmongo
 
-    codigo = int(input('Informe o código do produto: '))
+    _id = input('Informe o ID do produto: ')
     nome = input('Informe o nome do produto: ')
     preco = float(input('Informe o preço do produto: '))
     estoque = int(input('Informe a quantidade em estoque: '))
 
-    cursor.execute(
-        f"UPDATE produtos SET nome='{nome}', preco={preco}, estoque={estoque} WHERE id={codigo}")
-    conn.commit()
-
-    if cursor.rowcount == 1:
-        print(f'O produto nome foi atualizado com sucesso.')
-    else:
-        print('Não foi possível atualizaro produto.')
+    try:
+        if db.produtos.count_documents({}) > 0:
+            res = db.produtos.update_one(
+                {"_id": ObjectId(_id)},
+                {
+                    "$set": {
+                        "nome": nome,
+                        "preco": preco,
+                        "estoque": estoque
+                    }
+                }
+            )
+            if res.modified_count == 1:
+                print(f'O produto {nome} foi atualizado com sucesso.')
+            else:
+                print(f'Não foi possível atualizar o produto {nome}')
+        else:
+            print('Não existem documentos para serem atualizados.')
+    except errors.PyMongoError as e:
+        print(f'Erro ao acessar o banco de dados: {e}')
     desconectar(conn)
 
 
@@ -95,17 +112,25 @@ def deletar():
     print('Deletando produto...')"""
 
     conn = conectar()
-    cursor = conn.cursor()
+    db = conn.pmongo
 
-    codigo = int(input('Informe o código do produto: '))
+    _id = input('Informe o código do produto: ')
 
-    cursor.execute(f"DELETE FROM produtos WHERE id={codigo}")
-    conn.commit()
-
-    if cursor.rowcount == 1:
-        print(f'O produto nome foi deletado com sucesso.')
-    else:
-        print('Não foi possível deletar produto.')
+    try:
+        if db.produtos.count_documents({}) > 0:
+            res = db.produtos.delete_one(
+                {
+                    "_id": ObjectId(_id)
+                }
+            )
+            if res.deleted_count > 0:
+                print(f'O produto com id: {_id} foi deletado com sucesso.')
+            else:
+                print(f'Não foi possível inserir o produto id: {_id}')
+        else:
+            print('Não existem produtos para serem deletados.')
+    except errors.PyMongoError as e:
+        print(f'Erro ao acessar o banco de dados: {e}')
     desconectar(conn)
 
 
