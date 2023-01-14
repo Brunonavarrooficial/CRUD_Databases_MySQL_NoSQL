@@ -111,6 +111,26 @@ Operação Crud com banco de dados MongoDB e linguagem JAVA
    * mongo-java-driver-3.12.11.jar
 #
 
+## CRUD Redis JAVA
+
+Código CRUD em linguagem JAVA para banco de dados Redis
+#
+
+* Classes
+* bibliotecas
+   * import java.util.Arrays;
+   * import java.util.HashMap;
+   * import java.util.Locale;
+   * import java.util.Map;
+   * import java.util.Scanner;
+   * import java.util.Set;
+   * import redis.clients.jedis.Jedis;
+   * import redis.clients.jedis.exceptions.JedisConnectionException;
+* Jar
+   * jedis-4.3.1.jar
+
+#
+
 ## Getting Started
 
 Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
