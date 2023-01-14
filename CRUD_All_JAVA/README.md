@@ -44,7 +44,7 @@ realizada opração crud com banco de dados PostgreSQL em Linguajem JAVA
 ### Skills:
 
 * Classes
-* Bibliotecas
+* Bibliotécas
     * import java.sql.Connection;
     * import java.sql.DriverManager;
     * import java.sql.PreparedStatement;
@@ -67,7 +67,7 @@ realizada opração crud com banco de dados SQLite em Linguajem JAVA
 * Classes
 * Repositório sqlite criado na raiz do projeto
    * jsqlite3.geek
-* Bibliotecas
+* Bibliotécas
     * import java.sql.Connection;
     * import java.sql.DriverManager;
     * import java.sql.ResultSet;
@@ -78,6 +78,37 @@ realizada opração crud com banco de dados SQLite em Linguajem JAVA
 * Jar
    * sqlite-jdc-3.40.0.0.jar
    
+#
+
+## CRUD mongoDB JAVA
+
+Operação Crud com banco de dados MongoDB e linguagem JAVA
+#
+
+### Skills
+
+* Classes
+* Bibliotécas
+   * import java.util.Arrays;
+   * import java.util.Locale;
+   * import java.util.Scanner;
+   * import org.bson.Document;
+   * import org.bson.conversions.Bson;
+   * import org.bson.types.ObjectId;
+   * import org.json.JSONObject;
+   * import com.mongodb.MongoClientSettings;
+   * import com.mongodb.ServerAddress;
+   * import com.mongodb.client.MongoClients;
+   * import com.mongodb.client.MongoCollection;
+   * import com.mongodb.client.MongoCursor;
+   * import com.mongodb.client.MongoDatabase;
+   * import com.mongodb.client.result.DeleteResult;
+   * import com.mongodb.client.result.UpdateResult;
+   * import static com.mongodb.client.model.Updates.combine;
+   * import static com.mongodb.client.model.Updates.set;
+* Jar
+   *  json-20220924.jar
+   * mongo-java-driver-3.12.11.jar
 #
 
 ## Getting Started
