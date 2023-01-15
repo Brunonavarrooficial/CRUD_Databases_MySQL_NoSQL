@@ -36,7 +36,7 @@ realizada operação crud com bando de dados MySQL WorkBench em linguagem JAVA
    * MySQL-Connector-j-8.0.31.jar 
 
 ##
-## CRUD PostgreSQL JAVA
+## CRUD PostgreSQL in JAVA
 realizada opração crud com banco de dados PostgreSQL em Linguajem JAVA
 
 #
@@ -57,7 +57,7 @@ realizada opração crud com banco de dados PostgreSQL em Linguajem JAVA
    
 ##
 
-## CRUD SQLite JAVA
+## CRUD SQLite in JAVA
 realizada opração crud com banco de dados SQLite em Linguajem JAVA
 
 #
@@ -80,7 +80,7 @@ realizada opração crud com banco de dados SQLite em Linguajem JAVA
    
 #
 
-## CRUD mongoDB JAVA
+## CRUD mongoDB in JAVA
 
 Operação Crud com banco de dados MongoDB e linguagem JAVA
 #
@@ -111,13 +111,13 @@ Operação Crud com banco de dados MongoDB e linguagem JAVA
    * mongo-java-driver-3.12.11.jar
 #
 
-## CRUD Redis JAVA
+## CRUD Redis in JAVA
 
 Código CRUD em linguagem JAVA para banco de dados Redis
 #
 
 * Classes
-* bibliotecas
+* bibliotécas
    * import java.util.Arrays;
    * import java.util.HashMap;
    * import java.util.Locale;
@@ -128,6 +128,28 @@ Código CRUD em linguagem JAVA para banco de dados Redis
    * import redis.clients.jedis.exceptions.JedisConnectionException;
 * Jar
    * jedis-4.3.1.jar
+
+#
+
+## CRUD CouchDB in JAVA
+Código Crud na linguagem Java em conexão com banco de dados CouchDB
+#
+
+* Classes
+* Bibliotécas
+   * import java.io.IOException;
+   * import java.net.URI;
+   * import java.net.http.HttpClient;
+   * import java.net.http.HttpRequest;
+   * import java.net.http.HttpResponse;
+   * import java.net.http.HttpRequest.BodyPublishers;
+   * import java.net.http.HttpResponse.BodyHandlers;
+   * import java.util.Scanner;
+   * import org.json.JSONArray;
+   * import org.json.JSONObject;
+* Jar
+   * #### Não foi necessário
+
 
 #
 
