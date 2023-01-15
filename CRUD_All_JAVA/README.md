@@ -1,13 +1,17 @@
 # ALL CRUD JAVA
 
-Operação CRUD em diversos bancos de dados relacionais e não relacionais.
+Operação CRUD em diversos bancos de dados relacionais e não relacionais na linguagem JAVA
 
 #
 
 * Relacionais
      * MySqlWorkBench [Repositório](https://github.com/Brunonavarrooficial/CRUD_Databases_MySQL_NoSQL/tree/main/CRUD_All_JAVA/src/jmysql)
      * PostgreSQL [Repositório](https://github.com/Brunonavarrooficial/CRUD_Databases_MySQL_NoSQL/tree/main/CRUD_All_JAVA/src/jpostgresql)
+     * SQLite [Repositório](https://github.com/Brunonavarrooficial/CRUD_Databases_MySQL_NoSQL/tree/main/CRUD_All_JAVA/src/jsqlite)
 * Não Relacionais
+     * MongoDB [Repositório](https://github.com/Brunonavarrooficial/CRUD_Databases_MySQL_NoSQL/tree/main/CRUD_All_JAVA/src/jmongodb)
+     * CouchDB [Repositório](https://github.com/Brunonavarrooficial/CRUD_Databases_MySQL_NoSQL/tree/main/CRUD_All_JAVA/src/jcouchdb)
+     * Redis [repositório](https://github.com/Brunonavarrooficial/CRUD_Databases_MySQL_NoSQL/tree/main/CRUD_All_JAVA/src/jredis)
 
 * Pacotes .Jar
      * [Repositório](https://github.com/Brunonavarrooficial/CRUD_Databases_MySQL_NoSQL/tree/main/CRUD_All_JAVA/lib)
