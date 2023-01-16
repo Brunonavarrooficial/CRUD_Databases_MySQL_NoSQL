@@ -1,6 +1,6 @@
 # ALL CRUD JAVA
 
-Operação CRUD em diversos bancos de dados relacionais e não relacionais na linguagem JAVA
+Código adaptádo para operação CRUD em diversos bancos de dados relacionais e não relacionais na linguagem JAVA
 
 #
 
@@ -21,7 +21,7 @@ Operação CRUD em diversos bancos de dados relacionais e não relacionais na li
 
 ## CRUD MySQL WorkBench Java
 
-realizada operação crud com bando de dados MySQL WorkBench em linguagem JAVA
+Realizada operação CRUD com bando de dados MySQL WorkBench em linguagem JAVA
 
 #
 
@@ -41,7 +41,7 @@ realizada operação crud com bando de dados MySQL WorkBench em linguagem JAVA
 
 ##
 ## CRUD PostgreSQL in JAVA
-realizada opração crud com banco de dados PostgreSQL em Linguajem JAVA
+Realizada operação CRUD com banco de dados PostgreSQL em Linguagem JAVA
 
 #
 
@@ -62,7 +62,7 @@ realizada opração crud com banco de dados PostgreSQL em Linguajem JAVA
 ##
 
 ## CRUD SQLite in JAVA
-realizada opração crud com banco de dados SQLite em Linguajem JAVA
+Realizada operação CRUD com banco de dados SQLite em linguagem JAVA
 
 #
 
@@ -86,7 +86,7 @@ realizada opração crud com banco de dados SQLite em Linguajem JAVA
 
 ## CRUD mongoDB in JAVA
 
-Operação Crud com banco de dados MongoDB e linguagem JAVA
+Operação Crud com banco de dados MongoDB em linguagem JAVA
 #
 
 ### Skills
@@ -139,6 +139,8 @@ Código CRUD em linguagem JAVA para banco de dados Redis
 Código Crud na linguagem Java em conexão com banco de dados CouchDB
 #
 
+### Skills:
+
 * Classes
 * Bibliotécas
    * import java.io.IOException;
@@ -153,10 +155,29 @@ Código Crud na linguagem Java em conexão com banco de dados CouchDB
    * import org.json.JSONObject;
 * Jar
    * #### Não foi necessário
-
-
 #
 
+## CRUD Firebase in JAVA
+código CRUD na linguagem JAVA em conexão com banco de dados Firebase
+#
+
+### Skills:
+
+* Classes
+* Bibliotécas
+   * import java.io.IOException;
+   * import java.net.URI;
+   * import java.net.http.HttpClient;
+   * import java.net.http.HttpRequest;
+   * import java.net.http.HttpResponse;
+   * import java.net.http.HttpRequest.BodyPublishers;
+   * import java.net.http.HttpResponse.BodyHandlers;
+   * import java.util.Scanner;
+   * import org.json.JSONObject;
+* Jar
+   * #### Não foi necessário
+
+#
 ## Getting Started
 
 Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
