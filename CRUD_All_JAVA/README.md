@@ -12,6 +12,7 @@ Código adaptádo para operação CRUD em diversos bancos de dados relacionais e
      * MongoDB [Repositório](https://github.com/Brunonavarrooficial/CRUD_Databases_MySQL_NoSQL/tree/main/CRUD_All_JAVA/src/jmongodb)
      * CouchDB [Repositório](https://github.com/Brunonavarrooficial/CRUD_Databases_MySQL_NoSQL/tree/main/CRUD_All_JAVA/src/jcouchdb)
      * Redis [repositório](https://github.com/Brunonavarrooficial/CRUD_Databases_MySQL_NoSQL/tree/main/CRUD_All_JAVA/src/jredis)
+     * Firebase [repositório](https://github.com/Brunonavarrooficial/CRUD_Databases_MySQL_NoSQL/tree/main/CRUD_All_JAVA/src/jfirebase)
 
 * Pacotes .Jar
      * [Repositório](https://github.com/Brunonavarrooficial/CRUD_Databases_MySQL_NoSQL/tree/main/CRUD_All_JAVA/lib)
